@@ -150,7 +150,7 @@
 
 **Requirements:** WALLET-01, WALLET-02, WALLET-03, WALLET-08, WALLET-09, WALLET-10, PRIZE-06
 
-**Plans:** 6 plans in 4 waves
+**Plans:** 7 plans in 4 waves
 
 **Success Criteria:**
 1. OneWallet connects via Wallet Standard API (replaces mock wallet)
@@ -168,7 +168,8 @@
 - [ ] 06-02-PLAN.md — Wave 2: Move contract fixes and compilation
 - [ ] 06-03-PLAN.md — Wave 2: Contract deployment and address configuration
 - [ ] 06-04-PLAN.md — Wave 2: Contract unit tests (WALLET-08/09/10, PRIZE-06)
-- [ ] 06-05-PLAN.md — Wave 3: Frontend integration for betting/prizes
+- [ ] 06-05-PLAN.md — Wave 3: Room creation/joining with OCT betting (hook + CreateRoomModal + ActiveRoom)
+- [ ] 06-06-PLAN.md — Wave 3: Prize distribution flow (GameResults wiring + checkpoints)
 
 **Deliverables:**
 - `lib/wallet/` — OneWallet connection via Wallet Standard with balance fetching
