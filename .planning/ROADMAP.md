@@ -150,7 +150,7 @@
 
 **Requirements:** WALLET-01, WALLET-02, WALLET-03, WALLET-08, WALLET-09, WALLET-10, PRIZE-06
 
-**Plans:** 5 plans in 3 waves
+**Plans:** 6 plans in 4 waves
 
 **Success Criteria:**
 1. OneWallet connects via Wallet Standard API (replaces mock wallet)
@@ -164,11 +164,11 @@
 
 **Plans:**
 - [x] 06-00-PLAN.md — Wave 0: Test infrastructure setup (vitest, test stubs)
-- [ ] 06-01-PLAN.md — OneWallet integration with balance fetching (Wave 1)
-- [ ] 06-02-PLAN.md — Move contract fixes and compilation (Wave 2)
-- [ ] 06-03-PLAN.md — Contract deployment and address configuration (Wave 2)
-- [ ] 06-04-PLAN.md — Contract unit tests (Wave 2)
-- [ ] 06-05-PLAN.md — Frontend integration for betting/prizes (Wave 3)
+- [ ] 06-01-PLAN.md — Wave 1: OneWallet integration with balance fetching
+- [ ] 06-02-PLAN.md — Wave 2: Move contract fixes and compilation
+- [ ] 06-03-PLAN.md — Wave 2: Contract deployment and address configuration
+- [ ] 06-04-PLAN.md — Wave 2: Contract unit tests (WALLET-08/09/10, PRIZE-06)
+- [ ] 06-05-PLAN.md — Wave 3: Frontend integration for betting/prizes
 
 **Deliverables:**
 - `lib/wallet/` — OneWallet connection via Wallet Standard with balance fetching
