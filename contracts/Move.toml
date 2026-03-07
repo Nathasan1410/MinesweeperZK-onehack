@@ -1,0 +1,22 @@
+[package]
+name = "MinesweeperBet"
+version = "0.1.0"
+edition = "2024.alpha"
+
+[dependencies]
+MoveStdlib = { git = "https://github.com/move-language/move.git", subdir = "move-stdlib", rev = "main" }
+MoveosStdlib = { git = "https://github.com/move-language/move.git", subdir = "moveos-stdlib", rev = "main" }
+
+[addresses]
+minesweeper_bet = "0xYOUR_DEPLOYED_ADDRESS_HERE"
+std = "0x1"
+moveos_std = "0x2"
+oct = "0x2"
+
+[networks.testnet]
+rpc = "https://testnet-rpc.onechain.gg"
+
+[dev-dependencies]
+
+[build]
+move_build = "move"
