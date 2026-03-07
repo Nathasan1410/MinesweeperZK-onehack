@@ -12,8 +12,9 @@
 | 2 | Room System | Multiplayer room creation, matchmaking, Firebase sync | WALLET-04-07, FAIR-01-04, ROOM-01-07, PRIZE-07 | User can create/join rooms, see room list, quick match |
 | 3 | Move Contracts | Betting escrow, prize distribution, house cut | WALLET-08-10, FAIR-06, PRIZE-06, SUBMIT-06, SUBMIT-07 | Contract deployed, bets held, prizes distributed |
 | 4 | Core Gameplay | Minesweeper game UI, scoring, time pressure | GAME-01-10 | User can play Minesweeper, see score, timer works |
-| 5 | Game Validation | Firebase server-side validation, anti-cheat | FAIR-05 | Cheating prevented, moves validated server-side |
-| 6 | Hackathon Submission | MVP deployment, demo video, documentation | SUBMIT-01-05 | Complete submission package ready for judges |
+| 5 | Gameplay Wiring | Connect game to rooms, start game, score decay | GAME-02, GAME-04, GAME-08 | Game starts when host clicks, score decays with time |
+| 6 | OneChain Integration | Real OneWallet, Move contract, OCT transfers | WALLET-01-03, WALLET-08-10, PRIZE-06 | OneWallet connects, contract deployed, real betting works |
+| 7 | E2E Verification & Submission | Test full flow, deploy, submit | SUBMIT-01-05 | E2E tested, Vercel deployed, demo video, submission form |
 
 ---
 
@@ -143,7 +144,74 @@
 
 ---
 
-### Phase 5: Game Validation
+### Phase 6: OneChain Integration
+
+**Goal:** Replace mock wallet with real OneWallet, deploy Move contract, enable real OCT betting
+
+**Requirements:** WALLET-01, WALLET-02, WALLET-03, WALLET-08, WALLET-09, WALLET-10, PRIZE-06
+
+**Success Criteria:**
+1. OneWallet connects via Wallet Standard API (replaces mock wallet)
+2. Real OCT balance displays (not mock 100 OCT)
+3. Move contract deployed to OneChain testnet
+4. Contract address verified on OneScan explorer
+5. Bet placement locks OCT in escrow via contract
+6. Prize distribution sends OCT to winners automatically
+7. House cut (5%) transferred to organizer wallet
+8. All contract calls work through OneWallet
+
+**Deliverables:**
+- `lib/wallet/oneWallet.ts` — OneWallet connection via Wallet Standard
+- `contracts/sources/minesweeper_bet.move` — Betting escrow contract
+- `contracts/sources/prize_distribution.move` — Prize logic
+- `contracts/Move.toml` — Move package config
+- `lib/contract/` — Contract interaction hooks
+- Deploy scripts (`one` CLI)
+- OneScan verification
+
+**Tech Decisions:**
+- OneChain testnet as default network
+- Wallet Standard API for OneWallet integration
+- OCT token (`0x2::oct::OCT`) for all betting
+- Contract handles escrow + distribution atomically
+
+---
+
+### Phase 7: E2E Verification & Submission
+
+**Goal:** Test complete game flow, deploy to production, submit to OneHack 3.0
+
+**Requirements:** SUBMIT-01, SUBMIT-02, SUBMIT-03, SUBMIT-04, SUBMIT-05
+
+**Success Criteria:**
+1. Full game played end-to-end (create room → join → play → prizes)
+2. MVP deployed to Vercel (production URL)
+3. OneWallet integration works in production
+4. Demo video recorded (max 3 minutes) covering:
+   - Wallet connection
+   - Room creation/joining
+   - Gameplay demo
+   - Prize distribution
+5. GitHub repo public with complete code
+6. Google Drive submission folder complete
+7. OneHack 3.0 submission form submitted before deadline
+
+**Deliverables:**
+- Vercel deployment (production URL)
+- YouTube demo video (unlisted or public)
+- Public GitHub repository
+- Google Drive submission folder
+- Completed submission form
+
+**Timeline:**
+- E2E Testing: March 15-20, 2026
+- Vercel Deploy: March 21-24, 2026
+- Demo Video: March 25, 2026
+- Submit Form: March 27, 2026 (before 11:59 PM UTC+7)
+
+---
+
+### Phase 6 (Original): Game Validation
 
 **Goal:** Server-side validation to prevent cheating
 
@@ -170,7 +238,7 @@
 
 ---
 
-### Phase 6: Hackathon Submission
+### Phase 7 (Original): Hackathon Submission
 
 **Goal:** Complete submission package for OneHack 3.0
 
