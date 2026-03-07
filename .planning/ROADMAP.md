@@ -150,6 +150,8 @@
 
 **Requirements:** WALLET-01, WALLET-02, WALLET-03, WALLET-08, WALLET-09, WALLET-10, PRIZE-06
 
+**Plans:** 3 plans
+
 **Success Criteria:**
 1. OneWallet connects via Wallet Standard API (replaces mock wallet)
 2. Real OCT balance displays (not mock 100 OCT)
@@ -160,12 +162,18 @@
 7. House cut (5%) transferred to organizer wallet
 8. All contract calls work through OneWallet
 
+**Plans:**
+- [ ] 06-01-PLAN.md — OneWallet integration with balance fetching (Wave 1)
+- [ ] 06-02-PLAN.md — Move contract fixes and deployment (Wave 2)
+- [ ] 06-03-PLAN.md — Contract integration for betting/prizes (Wave 2)
+
 **Deliverables:**
-- `lib/wallet/oneWallet.ts` — OneWallet connection via Wallet Standard
-- `contracts/sources/minesweeper_bet.move` — Betting escrow contract
-- `contracts/sources/prize_distribution.move` — Prize logic
-- `contracts/Move.toml` — Move package config
+- `lib/wallet/` — OneWallet connection via Wallet Standard with balance fetching
+- `contracts/sources/minesweeper_bet.move` — Fixed betting escrow contract
+- `contracts/Move.toml` — Move package config with deployed address
 - `lib/contract/` — Contract interaction hooks
+- `__tests__/wallet/` — Wallet unit tests
+- `__tests__/contract/` — Contract unit tests
 - Deploy scripts (`one` CLI)
 - OneScan verification
 
@@ -325,8 +333,8 @@ Phase 6 (Submission)
 - ✓ Creativity: Battle royale Minesweeper (30-50 players)
 - ✓ Quality: Clean UI, working gameplay, no major bugs
 - ✓ Relevance: GameFi track, OneChain ecosystem
-- ✓ Potential:可扩展 to tournaments, NFTs, leaderboards
+- ✓ Potential: 可扩展 to tournaments, NFTs, leaderboards
 
 ---
 
-*Last updated: 2026-03-07 after roadmap creation*
+*Last updated: 2026-03-07 after roadmap update*
