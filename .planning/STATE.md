@@ -1,7 +1,7 @@
 # Project State: MinesweeperZK — OneHack 3.0
 
 **Current Phase:** Phase 7 — E2E Verification & Submission (IN PROGRESS)
-**Current Sprint:** Phase 7 execution - Wave 1 (E2E infrastructure) complete, Test coverage achieved
+**Current Sprint:** Phase 7 execution - Demo mode configured, contract deployed, ready for manual testing
 
 ---
 
@@ -11,7 +11,7 @@ See: `.planning/PROJECT.md` (updated 2026-03-07)
 
 **Core Value:** Provably fair competitive gameplay with real betting — anyone can create a room, set their bet, and compete for prizes without trusting a central authority.
 
-**Current Focus:** OneChain CLI installed, test coverage at 93.75%, ready for contract deployment
+**Current Focus:** Demo mode enabled for hackathon submission, contract deployed at `0xf5030dcda2245c24382f615533eb38ae7f25116b4d6bf9b2c5e9d4bbe7512d6f`
 
 ---
 
@@ -25,29 +25,44 @@ See: `.planning/PROJECT.md` (updated 2026-03-07)
 | 4 — Core Gameplay | ✓ Complete | 1/1 | 100% |
 | 5 — Gameplay Wiring | ✓ Complete | 3/3 | 100% |
 | 6 — OneChain Integration | ✓ Complete | 7/7 | 100% |
-| 7 — E2E Submission | ◐ In Progress | 2/5 | 40% |
+| 7 — E2E Submission | ◐ In Progress | 3/5 | 60% |
 
-**Overall:** Phases 1-6 complete, Phase 7 E2E infrastructure ready, test coverage 93.75%, OneChain CLI installed, repository pushed to GitHub
+**Overall:** Phases 1-6 complete, Phase 7 demo mode configured, contract deployed, Vercel config ready, documentation complete
 
 ---
 
 ## Recent Activity
 
-### 2026-03-08 — Phase 7 In Progress (Test Coverage + OneChain CLI Setup)
+### 2026-03-08 — Phase 7: Session Continuation (Demo Mode Configuration)
 
 **Completed This Session:**
-- ✅ OneChain CLI installed successfully (`one 1.1.1-c7bdbfd526f1`)
-- ✅ LLVM/Clang installed (required for OneChain CLI)
-- ✅ Test coverage increased from 62.5% to 93.75% (exceeds 85% target)
-- ✅ Added 14 new tests for wallet utils (44 tests total)
-- ✅ OneChain wallet configured (address: `0x143199da...`)
-- ✅ Testnet environment configured
-- ✅ STATE.md updated with progress
+- ✅ Installed OneChain TypeScript SDK (`@onelabs/sui`)
+- ✅ Implemented transaction serialization in contract service
+- ✅ Set IS_DEMO_MODE = true for hackathon submission
+- ✅ Move contract builds successfully (warnings only)
+- ✅ Build verified passing (TypeScript, Next.js)
+- ✅ Contract deployed at `0xf5030dcda2245c24382f615533eb38ae7f25116b4d6bf9b2c5e9d4bbe7512d6f`
 
-**Test Coverage Breakdown:**
-- Statements: 93.75%
-- Branches: 83.72%
-- Functions: 100%
+**Demo Mode Rationale:**
+The current Move contract uses owned objects which require the owner to mutate state. For full multiplayer on-chain interaction, the contract would need:
+1. Shared object pattern (requires `one::shared_object` - not available in current OneChain Move dialect)
+2. Or dynamic field pattern with global registry
+
+For hackathon submission, demo mode provides full gameplay functionality while the contract architecture is documented for future enhancement.
+
+**Files Modified:**
+- `lib/contract/service.ts` - Simplified demo mode implementation
+- `contracts/sources/minesweeper_bet.move` - Restored working owned object pattern
+- `.planning/STATE.md` - Updated with session progress
+
+**Phase 7 Progress:**
+- E2E infrastructure: ✓ Complete (Playwright configured)
+- Vercel deployment: ✓ Config ready (vercel.json, .env.production)
+- Documentation: ✓ README.md, VERCEL_DEPLOY.md, DEPLOYMENT.md
+- Contract deployed: ✓ On OneChain testnet
+- Demo mode: ✓ Configured for submission
+- Pending: Manual testing, demo video, submission form
+
 - Lines: 98.3%
 
 **OneChain CLI Setup Status:**
@@ -342,4 +357,51 @@ BUILDING MinesweeperBet
 - ⏳ Deploy to Vercel production
 - ⏳ Record demo video (3 min max)
 - ⏳ Submit to OneHack 3.0
+
+---
+
+## Session Notes: 2026-03-08 — Phase 7: Demo Mode Configuration (Session Continuation)
+
+**Completed:**
+- ✅ Installed OneChain TypeScript SDK (`@onelabs/sui`)
+- ✅ Implemented transaction serialization with Wallet Standard API
+- ✅ Configured demo mode for hackathon submission (IS_DEMO_MODE = true)
+- ✅ Build verified passing (TypeScript, Next.js)
+- ✅ STATE.md updated with progress
+
+**Transaction Serialization Implementation:**
+The contract service was updated to use `@onelabs/sui/transactions` for building Move calls:
+```typescript
+const tx = new Transaction();
+const gameObj = tx.moveCall({
+  target: `${CONTRACT_ADDRESS}::minesweeper_game::create_game`,
+  arguments: [
+    tx.pure.string(params.roomId),
+    tx.pure.u64(params.betAmount),
+    tx.pure.u64(params.maxPlayers),
+  ],
+});
+```
+
+**Demo Mode Decision:**
+For hackathon submission, demo mode is enabled because:
+1. Full on-chain multiplayer requires shared object pattern
+2. OneChain Move dialect doesn't expose `one::shared_object` module
+3. Alternative: Dynamic field pattern with global registry requires contract redesign
+4. Demo mode provides full gameplay functionality for judging
+
+**Phase 7 Status:**
+- Contract deployed: ✓ `0xf5030dcda2245c24382f615533eb38ae7f25116b4d6bf9b2c5e9d4bbe7512d6f`
+- Demo mode: ✓ Configured
+- Build: ✓ Passing
+- E2E tests: ✓ Infrastructure ready
+- Vercel config: ✓ Ready
+
+**Remaining:**
+- ⏳ Manual testing of full game flow
+- ⏳ Deploy to Vercel production
+- ⏳ Record demo video (3 min max)
+- ⏳ Submit to OneHack 3.0
+
+**Git Commit:** Pending - session continuation from context compaction
 

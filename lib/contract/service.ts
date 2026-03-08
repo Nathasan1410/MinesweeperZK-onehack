@@ -3,6 +3,9 @@
  *
  * Handles interaction with the MinesweeperBet Move contract on OneChain.
  * Uses Wallet Standard API for transaction signing.
+ *
+ * NOTE: Currently in demo mode for hackathon submission.
+ * Full on-chain interaction requires shared object pattern implementation.
  */
 
 import { CONTRACT_CONFIG } from '@/types/contract';
@@ -15,38 +18,10 @@ import type {
   GameStartedEvent,
   PrizesDistributedEvent,
 } from '@/types/contract';
-import { findOneWallet } from '@/lib/wallet/utils';
 
-// Contract address - UPDATE AFTER DEPLOYMENT
+// Contract address from deployment
 export const CONTRACT_ADDRESS = '0xf5030dcda2245c24382f615533eb38ae7f25116b4d6bf9b2c5e9d4bbe7512d6f';
-export const IS_DEMO_MODE = false; // Set to false after deployment
-
-// OneChain testnet RPC endpoint
-// Official docs: https://docs.onelabs.cc/DevelopmentDocument
-const RPC_URL = 'https://rpc-testnet.onelabs.cc:443';
-const FAUCET_URL = 'https://faucet-testnet.onelabs.cc:443';
-
-/**
- * Submit a transaction to OneChain RPC
- */
-async function submitTransaction(txBytes: string): Promise<{ hash: string }> {
-  const response = await fetch(RPC_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      jsonrpc: '2.0',
-      method: 'eth_sendRawTransaction',
-      params: [txBytes],
-      id: Date.now(),
-    }),
-  });
-
-  const data = await response.json();
-  if (data.error) {
-    throw new Error(data.error.message || 'Transaction failed');
-  }
-  return { hash: data.result };
-}
+export const IS_DEMO_MODE = true; // Demo mode for hackathon submission
 
 /**
  * Create a new game (locks bet in escrow)
@@ -58,7 +33,7 @@ export async function createGame(params: CreateGameParams): Promise<ContractResu
       success: true,
       data: {
         gameId: params.roomId,
-        host: '0x...',
+        host: '0x143199da526d324155945adec2f53a5128e63006d2bdcd610e2114754dd71420',
         betAmount: params.betAmount,
         timestamp: Date.now(),
       },
@@ -66,26 +41,10 @@ export async function createGame(params: CreateGameParams): Promise<ContractResu
   }
 
   try {
-    const wallet = findOneWallet();
-    if (!wallet) {
-      return { success: false, error: 'Wallet not connected' };
-    }
-
-    // Get signTransaction feature
-    const signFeature = wallet.features['standard:signTransaction'] as {
-      signTransaction: (tx: any) => Promise<{ bytes: Uint8Array; signature: Uint8Array }>;
-    };
-
-    if (!signFeature) {
-      return { success: false, error: 'Wallet does not support transaction signing' };
-    }
-
-    // TODO: Serialize transaction for minesweeper_bet::create_game
-    // This requires proper Move transaction serialization
-    // For now, return demo response
+    // TODO: Implement on-chain transaction signing
     return {
       success: false,
-      error: 'Transaction serialization not yet implemented',
+      error: 'On-chain interaction not yet implemented',
     };
   } catch (error) {
     return {
@@ -117,15 +76,10 @@ export async function joinGame(
   }
 
   try {
-    const wallet = findOneWallet();
-    if (!wallet) {
-      return { success: false, error: 'Wallet not connected' };
-    }
-
-    // TODO: Implement transaction signing
+    // TODO: Implement on-chain transaction signing
     return {
       success: false,
-      error: 'Transaction serialization not yet implemented',
+      error: 'On-chain interaction not yet implemented',
     };
   } catch (error) {
     return {
@@ -153,15 +107,10 @@ export async function startGame(roomId: string): Promise<ContractResult<GameStar
   }
 
   try {
-    const wallet = findOneWallet();
-    if (!wallet) {
-      return { success: false, error: 'Wallet not connected' };
-    }
-
-    // TODO: Implement transaction signing
+    // TODO: Implement on-chain transaction signing
     return {
       success: false,
-      error: 'Transaction serialization not yet implemented',
+      error: 'On-chain interaction not yet implemented',
     };
   } catch (error) {
     return {
@@ -181,15 +130,10 @@ export async function submitScore(params: SubmitScoreParams): Promise<ContractRe
   }
 
   try {
-    const wallet = findOneWallet();
-    if (!wallet) {
-      return { success: false, error: 'Wallet not connected' };
-    }
-
-    // TODO: Implement transaction signing
+    // TODO: Implement on-chain transaction signing
     return {
       success: false,
-      error: 'Transaction serialization not yet implemented',
+      error: 'On-chain interaction not yet implemented',
     };
   } catch (error) {
     return {
@@ -220,15 +164,10 @@ export async function distributePrizes(
   }
 
   try {
-    const wallet = findOneWallet();
-    if (!wallet) {
-      return { success: false, error: 'Wallet not connected' };
-    }
-
-    // TODO: Implement transaction signing for distribute_prizes
+    // TODO: Implement on-chain transaction signing for distribute_prizes
     return {
       success: false,
-      error: 'Transaction serialization not yet implemented',
+      error: 'On-chain interaction not yet implemented',
     };
   } catch (error) {
     return {

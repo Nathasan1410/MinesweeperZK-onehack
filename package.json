@@ -20,6 +20,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@onelabs/sui": "^1.26.2",
     "@tailwindcss/postcss": "^4.2.1",
     "@wallet-standard/core": "^1.1.1",
     "firebase": "^12.10.0",
