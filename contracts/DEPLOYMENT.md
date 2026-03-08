@@ -1,36 +1,65 @@
 # Contract Deployment Guide
 
-## Prerequisites
+## Quick Deployment (Recommended for Hackathon)
 
-### Option 1: OneChain CLI (Recommended)
+### Option 1: OneChain Dashboard (Fastest - No CLI Setup)
 
-The OneChain CLI (`one` command) is required for contract deployment.
+**Steps:**
+
+1. **Open OneChain Dashboard:**
+   - Visit: https://onechain.gg/dashboard
+   - Or: https://ide.onechain.gg/
+
+2. **Connect OneWallet:**
+   - Click "Connect Wallet"
+   - Approve connection in OneWallet popup
+
+3. **Deploy Contract:**
+   - Click "Publish" or "Deploy"
+   - Paste contents of `contracts/sources/minesweeper_bet.move`
+   - Select "Testnet" network
+   - Click "Deploy" / "Publish"
+   - Approve transaction in OneWallet
+
+4. **Copy Contract Address:**
+   - After deployment, copy the contract address
+   - Format: `0x...` (hexadecimal)
+
+5. **Update Configuration:**
+   - Update files as shown in "Post-Deployment" section below
+
+**Estimated Time:** 5-10 minutes
+
+---
+
+### Option 2: OneChain CLI (Advanced)
+
+The OneChain CLI (`one` command) requires wallet setup and gas tokens.
 
 **Installation:**
+```bash
+# Already installed via cargo
+# one 1.1.1-c7bdbfd526f1
+```
 
-1. **From Official Documentation:**
-   ```bash
-   # Visit https://onechain.gg/docs/guide/cli for latest installation instructions
-   ```
+**Wallet Setup:**
+```bash
+# Create new address (interactive)
+one client new-address ed25519
 
-2. **Check Installation:**
-   ```bash
-   one --version
-   ```
+# Get testnet tokens from faucet
+one client faucet
 
-### Option 2: OneChain Dashboard (No CLI Required)
+# Check balance
+one client balance
+```
 
-1. Visit [OneChain Dashboard](https://onechain.gg/dashboard)
-2. Connect your OneWallet
-3. Upload Move contract source
-4. Deploy via web interface
-
-### Option 3: OneChain IDE (Browser-based)
-
-1. Visit [OneChain IDE](https://ide.onechain.gg/)
-2. Connect OneWallet
-3. Import contract from GitHub or paste source
-4. Deploy to testnet
+**Deploy:**
+```bash
+cd contracts
+one move build
+one client publish --network testnet
+```
 
 ---
 
