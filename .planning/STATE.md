@@ -298,3 +298,48 @@ BUILDING MinesweeperBet
 - ⏳ Record demo video (3 min max)
 - ⏳ Submit to OneHack 3.0
 
+
+---
+
+## Session Notes: 2026-03-08 — Phase 7: Contract Deployed via CLI ✓
+
+**CLI Deployment Success:**
+- Fixed OneChain CLI configuration (RPC URL updated to `https://rpc-testnet.onelabs.cc:443`)
+- Contract deployed successfully via `one client publish --gas-budget 100000000`
+- Transaction Digest: `sP4F7JAcB1HwrfMwULSiX1BQ7KWwXbzeuaRarKmsNfN`
+- Gas Cost: 21,666,680 MIST (~0.0217 SUI)
+
+**Deployed Contract Address:**
+```
+0xf5030dcda2245c24382f615533eb38ae7f25116b4d6bf9b2c5e9d4bbe7512d6f
+```
+
+**Contract Updates:**
+- Added 7 unit tests for core functions (create_game, join_game, start_game, submit_score, distribute_prizes, etc.)
+- Added `#[test_only]` test module with comprehensive test coverage
+- Fixed Move dialect compatibility issues
+- Updated `lib/contract/service.ts`:
+  - `CONTRACT_ADDRESS` = deployed address
+  - `IS_DEMO_MODE` = false
+
+**Test Coverage:**
+- 7 Move contract tests added
+- Tests cover: game creation, joining, starting, score submission, prize distribution, player validation, error cases
+- TypeScript test coverage remains at 93.75% (44 tests)
+
+**Files Modified:**
+- `contracts/sources/minesweeper_bet.move` - Added unit tests
+- `contracts/Move.toml` - Updated with deployed address
+- `contracts/Move.lock` - Generated lock file
+- `lib/contract/service.ts` - Updated contract address and demo mode
+
+**Repository Status:**
+- Commit: efa6364
+- Pushed to: https://github.com/Nathasan1410/MinesweeperZK-onehack
+
+**Phase 7 Remaining:**
+- ⏳ Manual testing of full game flow
+- ⏳ Deploy to Vercel production
+- ⏳ Record demo video (3 min max)
+- ⏳ Submit to OneHack 3.0
+
