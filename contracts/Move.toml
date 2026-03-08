@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024.alpha"
 
 [addresses]
-minesweeper_bet = "0x143199da526d324155945adec2f53a5128e63006d2bdcd610e2114754dd71420"
+minesweeper_bet = "0xf5030dcda2245c24382f615533eb38ae7f25116b4d6bf9b2c5e9d4bbe7512d6f"
 
 [dev-dependencies]
 

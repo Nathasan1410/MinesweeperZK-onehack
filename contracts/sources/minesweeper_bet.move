@@ -258,3 +258,141 @@ module minesweeper_bet::minesweeper_game {
         transfer::public_transfer(game, to);
     }
 }
+
+#[test_only]
+module minesweeper_bet::minesweeper_game_tests {
+    use std::string;
+    use one::tx_context;
+    use minesweeper_bet::minesweeper_game::{
+        create_game, join_game, start_game, submit_score, distribute_prizes,
+        get_status, get_total_pool, get_player_count, get_game_id,
+    };
+    use minesweeper_bet::minesweeper_game::PlayerScore;
+
+    #[test]
+    fun test_create_game() {
+        // Create a test transaction context
+        let ctx = tx_context::dummy();
+        let game_id = string::utf8(b"test-room-1");
+        let bet_amount = 100;
+        let max_players = 10;
+
+        // Create game
+        let game = create_game(game_id, bet_amount, max_players, &mut ctx);
+
+        // Verify game properties
+        assert!(get_status(&game) == 0, 100); // STATUS_WAITING
+        assert!(get_total_pool(&game) == 0, 101);
+        assert!(get_player_count(&game) == 0, 102);
+        assert!(get_game_id(&game) == string::utf8(b"test-room-1"), 103);
+    }
+
+    #[test]
+    fun test_join_game() {
+        let ctx = tx_context::dummy();
+        let game_id = string::utf8(b"test-room-2");
+        let bet_amount = 50;
+        let max_players = 5;
+
+        // Create and join game
+        let mut game = create_game(game_id, bet_amount, max_players, &mut ctx);
+        let _ = join_game(&mut game, &mut ctx);
+
+        // Verify join
+        assert!(get_player_count(&game) == 1, 200);
+        assert!(get_total_pool(&game) == bet_amount, 201);
+    }
+
+    #[test]
+    fun test_start_game() {
+        let ctx = tx_context::dummy();
+        let game_id = string::utf8(b"test-room-4");
+        let bet_amount = 100;
+        let max_players = 5;
+
+        let mut game = create_game(game_id, bet_amount, max_players, &mut ctx);
+        let _ = join_game(&mut game, &mut ctx);
+
+        // Start game
+        let start_event = start_game(&mut game, &mut ctx);
+
+        // Verify start
+        assert!(get_status(&game) == 1, 300); // STATUS_PLAYING
+        assert!(start_event.player_count == 1, 301);
+        assert!(start_event.total_pool == bet_amount, 302);
+    }
+
+    #[test]
+    fun test_submit_score() {
+        let ctx = tx_context::dummy();
+        let game_id = string::utf8(b"test-room-6");
+        let bet_amount = 100;
+        let max_players = 5;
+
+        let mut game = create_game(game_id, bet_amount, max_players, &mut ctx);
+        let _ = join_game(&mut game, &mut ctx);
+        let _ = start_game(&mut game, &mut ctx);
+
+        // Submit score
+        submit_score(&mut game, 500, 2, &mut ctx);
+
+        // Score submission doesn't change visible state in current implementation
+        // but should not abort
+        assert!(get_status(&game) == 1, 400); // STATUS_PLAYING
+    }
+
+    #[test]
+    fun test_distribute_prizes() {
+        let ctx = tx_context::dummy();
+        let game_id = string::utf8(b"test-room-7");
+        let bet_amount = 100;
+        let max_players = 10;
+
+        let mut game = create_game(game_id, bet_amount, max_players, &mut ctx);
+
+        // Simulate multiple players joining (in tests, all from same sender)
+        // For simplicity, test with single player
+        let _ = join_game(&mut game, &mut ctx);
+        let _ = start_game(&mut game, &mut ctx);
+
+        // Create scores
+        let scores: vector<PlayerScore> = vector[
+            PlayerScore { player: @0x1, score: 1000, mines_hit: 0 },
+            PlayerScore { player: @0x2, score: 800, mines_hit: 1 },
+            PlayerScore { player: @0x3, score: 500, mines_hit: 2 },
+        ];
+
+        // Distribute prizes
+        let prize_event = distribute_prizes(&mut game, scores);
+
+        // Verify distribution
+        assert!(get_status(&game) == 2, 500); // STATUS_FINISHED
+        assert!(prize_event.house_fee > 0, 501);
+        assert!(vector::length(&prize_event.winners) >= 1, 502);
+    }
+
+    #[test]
+    fun test_is_player() {
+        let ctx = tx_context::dummy();
+        let game_id = string::utf8(b"test-room-8");
+        let bet_amount = 100;
+        let max_players = 5;
+
+        let mut game = create_game(game_id, bet_amount, max_players, &mut ctx);
+
+        // Before joining, player count is 0
+        assert!(get_player_count(&game) == 0, 600);
+
+        // Join and verify
+        let _ = join_game(&mut game, &mut ctx);
+        assert!(get_player_count(&game) == 1, 601);
+    }
+
+    #[test]
+    #[ext(should_abort)]
+    fun test_invalid_bet_amount_aborts() {
+        let ctx = tx_context::dummy();
+        // Zero bet should abort (E_INVALID_BET_AMOUNT)
+        let _ = create_game(string::utf8(b"invalid"), 0, 5, &mut ctx);
+    }
+}

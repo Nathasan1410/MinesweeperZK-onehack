@@ -18,8 +18,8 @@ import type {
 import { findOneWallet } from '@/lib/wallet/utils';
 
 // Contract address - UPDATE AFTER DEPLOYMENT
-export const CONTRACT_ADDRESS = '0xYOUR_DEPLOYED_ADDRESS_HERE';
-export const IS_DEMO_MODE = true; // Set to false after deployment
+export const CONTRACT_ADDRESS = '0xf5030dcda2245c24382f615533eb38ae7f25116b4d6bf9b2c5e9d4bbe7512d6f';
+export const IS_DEMO_MODE = false; // Set to false after deployment
 
 // OneChain testnet RPC endpoint
 // Official docs: https://docs.onelabs.cc/DevelopmentDocument
