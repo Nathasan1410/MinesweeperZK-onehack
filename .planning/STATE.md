@@ -273,3 +273,28 @@ Use OneChain Dashboard (https://onechain.gg/dashboard) for deployment:
 
 **Git Commit:**
 - `30baea5` chore(phase-7): E2E test infrastructure and deployment config
+---
+
+### 2026-03-08 — Phase 7: Contract Ready for Manual Deployment (Session 2)
+
+**Completed:**
+- ✅ Move contract adapted for OneChain's Sui-compatible Move dialect
+- ✅ Contract builds successfully with `one move build`
+- ✅ MANUAL_DEPLOY.md created for dashboard deployment
+- ✅ Repository pushed to GitHub (commit 7a61999)
+- ✅ Build verified passing locally
+
+**Contract Build Status:**
+```
+BUILDING MinesweeperBet
+✓ Compilation successful (warnings only, no errors)
+```
+
+**Phase 7 Remaining:**
+- ⏳ Deploy Move contract to OneChain testnet (manual dashboard)
+- ⏳ Update CONTRACT_ADDRESS in config
+- ⏳ Run manual testing of full game flow
+- ⏳ Deploy to Vercel production
+- ⏳ Record demo video (3 min max)
+- ⏳ Submit to OneHack 3.0
+

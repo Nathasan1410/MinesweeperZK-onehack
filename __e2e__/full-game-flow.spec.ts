@@ -12,10 +12,10 @@ test.describe('Full Game Flow - Demo Mode', () => {
     await expect(page.getByText('MinesweeperZK')).toBeVisible();
 
     // Test 3: Description text is visible
-    await expect(page.getByText(/Provably fair|OneChain/i)).toBeVisible();
+    await expect(page.getByText('Provably fair competitive Minesweeper on OneChain')).toBeVisible();
 
     // Test 4: Create Room button exists (may be disabled until wallet connected)
-    const createRoomButton = page.getByRole('button', { name: /create room/i });
+    const createRoomButton = page.getByRole('button', { name: 'Create Room' });
     await expect(createRoomButton).toBeVisible();
 
     console.log('✓ Home page loaded successfully');
@@ -27,11 +27,11 @@ test.describe('Wallet Connection', () => {
     await page.goto('/');
 
     // Initial state: should show "Connect Your Wallet" message
-    await expect(page.getByText(/Connect Your Wallet/i)).toBeVisible();
-    await expect(page.getByText(/OneWallet/i)).toBeVisible();
+    await expect(page.getByText('Connect Your Wallet')).toBeVisible();
+    await expect(page.getByText('Connect your OneWallet to create or join game rooms')).toBeVisible();
 
     // Find and click connect button in header
-    const connectButton = page.getByRole('button', { name: /connect/i });
+    const connectButton = page.getByRole('button', { name: 'Connect OneWallet' });
     await expect(connectButton).toBeVisible();
     await connectButton.click();
 
@@ -53,7 +53,7 @@ test.describe('Room System', () => {
 
     // Room list should be visible after wallet connection
     // For now, verify the room list component renders
-    const createRoomButton = page.getByRole('button', { name: /create room/i });
+    const createRoomButton = page.getByRole('button', { name: 'Create Room' });
     await expect(createRoomButton).toBeVisible();
 
     // Room list container should exist
